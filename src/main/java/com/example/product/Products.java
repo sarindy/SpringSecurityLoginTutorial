@@ -15,6 +15,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="products")
@@ -25,10 +29,13 @@ public class Products {
 	private long id;
 	
 	@Column(name="description")
+	@NotEmpty(message = "*Please provide your name")
 	private String description;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="purchased_date")
+	@NotNull(message="not nul xxx")
+	@DateTimeFormat(pattern="dd-MMM-yyyy")
 	private Date purchsedDate;
 	
 	@OneToOne(cascade=CascadeType.ALL)
@@ -75,6 +82,18 @@ public class Products {
 	public void setProductDetail(ProductDetail productDetail) {
 		this.productDetail = productDetail;
 	}
+
+	public Products(long id, String description, Date purchsedDate, ProductDetail productDetail,
+			List<ProductOrder> productOrder) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.purchsedDate = purchsedDate;
+		this.productDetail = productDetail;
+		this.productOrder = productOrder;
+	}
+	
+	
 	
 	
 	
